@@ -1,5 +1,9 @@
 import pygame
-from random import randint
+import Map as map
+# import defenders as defen
+import enemies as enem
+import images
+
 
 print('z ujdyjtl')
 
@@ -11,8 +15,14 @@ Ecry = 720
 screen = pygame.display.set_mode((Ecrx, Ecry))
 screen.fill((100, 200, 0))
 
-
+'''
 def generate_road(ecrx, ecry):
+    """
+    генерирует массив точек, пригодный для построения по ним дороги
+    :param ecrx: ширина экрана в пикселях
+    :param ecry: высота экрана в пикселях
+    :return: собсна массив
+    """
     x = ecrx / 10
     y = ecry / 2
     shag = 0
@@ -33,6 +43,11 @@ def generate_road(ecrx, ecry):
 
 
 def draw_road(massiv):
+    """
+    дорогу рисует
+    :param massiv: массив точек, по которым строится дорога
+    :return: нан
+    """
     for pos in massiv:
         pygame.draw.circle(screen, [0, 0, 0], pos, 12)
     pygame.draw.lines(screen, [0, 0, 0], False, massiv, 24)
@@ -72,37 +87,72 @@ def inside_check(x, y, a):
 def generare_buildings(massiv_road, r):
     min_x, min_y, max_x, max_y = 1000, 1000, 0, 0
     road = [[0, 0]]
+    buildings = [[0, 0]]
     for pos in massiv_road:
         min_x = min(min_x, pos[0])
         max_x = max(max_x, pos[0])
         min_y = min(min_y, pos[1])
         max_y = max(max_y, pos[1])
     x = min_x
-    y = 100
+    y = min_y - r
+    if y < 100:
+        y = 100
     for i in range(len(massiv_road) - 1):
         while x < massiv_road[i + 1][0]:
             road += [[int(x), int(
                 (massiv_road[i][1] * (x - massiv_road[i][0]) + massiv_road[i + 1][1] * (massiv_road[i + 1][0] - x)) / (
                         massiv_road[i + 1][0] - massiv_road[i][0]))]]
-            x += 3
+            x += 5
+    while y < max_y + r:
+        y += 20
+        while x < max_x:
+            x += 20
+            zanyato = False
+            for coord in road:
+                if (coord[0] - x) ** 2 + (coord[1] - y) ** 2 < 1.21 * r * r:
+                    zanyato = True
+            if not zanyato:
+                buildings += [[x, y]]
+                road += [[x, y]]
+        x = min_x
+    return buildings
 
-    return road
+
+def draw_buildings(massiv, r):
+    for coor in massiv:
+        pygame.draw.circle(screen, [0, 0, 0], [coor[0], coor[1]], r // 2)
+'''
+
+# Эта функция должна быть не здесь, но пока так
+def draw_tower(x, y, r):
+    r = int(r)
+    pygame.draw.rect(screen, [100, 100, 100], [[int(x) - r // 2, int(y) - r // 2], [r, r]])
 
 
 pygame.display.update()
 clock = pygame.time.Clock()
 finished = False
 
-Road = generate_road(Ecrx, Ecry)
-Buildings = generare_buildings(Road, 50)
-print(Road)
-print(Buildings)
+Road = map.generate_road(Ecrx, Ecry)
+Buildings = map.generare_buildings(Road, 50)
+Enemies = [[0, 0]]
+Towers = [[0, 0]]
+
 
 while not finished:
     clock.tick(FPS)
-    draw_road(Road)
+    map.draw_road(Road)
+    map.draw_buildings(Buildings, 50)
+    for tower in Towers:
+        draw_tower(int(tower[0]), int(tower[1]), 30)
     pygame.display.update()
     for event in pygame.event.get():
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if (event.button == 1) or (event.button == 3):
+                cursor_pos = event.pos
+                for coord in Buildings:
+                    if (coord[0] - cursor_pos[0]) ** 2 + (coord[1] - cursor_pos[1]) ** 2 < 25 * 25:
+                        Towers += [coord]
         if event.type == pygame.QUIT:
             finished = True
 

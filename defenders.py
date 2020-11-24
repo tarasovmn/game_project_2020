@@ -9,6 +9,6 @@ class Defender():
         self.image = pygame.transform.scale(defender_image, ( , ))
 
 
-    def defender_shoot():
+    def defender_shoot(self):
         """This function is responsible for making defenders shoot at enemies"""
         pass # TODO - not done yet
