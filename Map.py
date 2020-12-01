@@ -1,8 +1,6 @@
 import pygame
 from random import randint
 
-print('z ujdyjtl')
-
 pygame.init()
 
 FPS = 30
@@ -96,26 +94,30 @@ def generare_buildings(massiv_road, r):
     if y < 100:
         y = 100
     for i in range(len(massiv_road) - 1):
-        while x < massiv_road[i + 1][0]:
-            road += [[int(x), int(
-                (massiv_road[i][1] * (x - massiv_road[i][0]) + massiv_road[i + 1][1] * (massiv_road[i + 1][0] - x)) / (
-                        massiv_road[i + 1][0] - massiv_road[i][0]))]]
+        t = 0.0
+        while t < 1:
+            road += [[int((massiv_road[i][0] * t + massiv_road[i + 1][0] * (1 - t))), int(
+                (massiv_road[i][1] * t + massiv_road[i + 1][1] * (1 - t)))]]
             x += 5
+            t += 0.1
     while y < max_y + r:
-        y += 20
+        y += 10
         while x < max_x:
-            x += 20
+            x += 10
             zanyato = False
             for coord in road:
-                if (coord[0] - x) ** 2 + (coord[1] - y) ** 2 < 1.21 * r * r:
+                if (coord[0] - x) ** 2 + (coord[1] - y) ** 2 < (r + 12) ** 2:
+                    zanyato = True
+            for coord in buildings:
+                if (coord[0] - x) ** 2 + (coord[1] - y) ** 2 < 4 * r * r:
                     zanyato = True
             if not zanyato:
                 buildings += [[x, y]]
-                road += [[x, y]]
+
         x = min_x
     return buildings
 
 
 def draw_buildings(massiv, r):
     for coor in massiv:
-        pygame.draw.circle(screen, [0, 0, 0], [coor[0], coor[1]], r // 2)
+        pygame.draw.circle(screen, [51, 35, 18], [coor[0], coor[1]], r)
