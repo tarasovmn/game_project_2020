@@ -7,7 +7,7 @@ class Defender(pygame.sprite.Sprite):
     def __init__(self, screen, coord):
         pygame.sprite.Sprite.__init__(self)
         defender_image = pygame.image.load('defender_image.png')
-        self.image = pygame.transform.scale(defender_image, (10, 10))
+        self.image = pygame.transform.scale(defender_image, (25, 25))
         self.reach_radius = 70
         self.rect = self.image.get_rect()
         self.coordinates = coord
