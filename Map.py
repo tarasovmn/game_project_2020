@@ -13,8 +13,8 @@ class Karta:
     FPS = 30
     Ecrx = 1200
     Ecry = 720
-    Road = [[-100, -100]]
-    Buildings = [[-100, -100]]
+    Road = []
+    Buildings = []
 
     def generate_road(self):
         """
@@ -71,17 +71,17 @@ class Karta:
             while t < 1:
                 road += [[int((self.Road[i][0] * t + self.Road[i + 1][0] * (1 - t))), int(
                     (self.Road[i][1] * t + self.Road[i + 1][1] * (1 - t)))]]
-                t += 0.1
+                t += 0.251
         for deltay in range(0, 300, 10):
             for tck in road:
                 for lol in [-1, 1]:
                     x = tck[0]
                     y = tck[1] + lol*deltay
-                    if y < min_y - r or y > max_y + r:
+                    if y < min_y - 2*r or y > max_y + 2*r:
                         continue
                     zanyato = False
                     for coord in road:
-                        if (coord[0] - x) ** 2 + (coord[1] - y) ** 2 < (r + 12) ** 2:
+                        if (coord[0] - x) ** 2 + (coord[1] - y) ** 2 < (r + 13) ** 2:
                             zanyato = True
                     for coord in buildings:
                         if (coord[0] - x) ** 2 + (coord[1] - y) ** 2 < 4 * r * r:
