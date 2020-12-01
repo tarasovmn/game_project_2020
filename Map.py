@@ -1,7 +1,6 @@
 import pygame
 from random import randint
 
-print('z ujdyjtl')
 
 pygame.init()
 

@@ -2,10 +2,9 @@ import pygame
 import Map as map
 # import defenders as defen
 import enemies as enem
-import images
 
 
-print('z ujdyjtl')
+
 
 pygame.init()
 
