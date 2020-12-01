@@ -1,11 +1,7 @@
 import pygame
-import Map as map
+from Map import Karta
 # import defenders as defen
 import enemies as enem
-import images
-
-
-print('z ujdyjtl')
 
 pygame.init()
 
@@ -26,16 +22,17 @@ pygame.display.update()
 clock = pygame.time.Clock()
 finished = False
 
-Road = map.generate_road(Ecrx, Ecry)
-Buildings = map.generare_buildings(Road, 30)
+Novaya_Karta = Karta()
+Novaya_Karta.generate_road()
+Novaya_Karta.generare_buildings(30)
 Enemies = [[0, 0]]
 Towers = [[0, 0]]
 
 
 while not finished:
     clock.tick(FPS)
-    map.draw_road(Road)
-    map.draw_buildings(Buildings, 30)
+    Novaya_Karta.draw_road()
+    Novaya_Karta.draw_buildings(30)
     for tower in Towers:
         draw_tower(int(tower[0]), int(tower[1]), 30)
     pygame.display.update()
@@ -43,7 +40,7 @@ while not finished:
         if event.type == pygame.MOUSEBUTTONDOWN:
             if (event.button == 1) or (event.button == 3):
                 cursor_pos = event.pos
-                for coord in Buildings:
+                for coord in Novaya_Karta.Buildings:
                     if (coord[0] - cursor_pos[0]) ** 2 + (coord[1] - cursor_pos[1]) ** 2 < 25 * 25:
                         Towers += [coord]
         if event.type == pygame.QUIT:
