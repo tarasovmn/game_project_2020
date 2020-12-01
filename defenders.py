@@ -3,10 +3,11 @@ import PIL
 from PIL import Image
 
 
-class Defender():
+class Defender(pygame.sprite.Sprite):
     def __init__(self):
+        pygame.sprite.Sprite.__init__(self)
         defender_image = Image.open('defender_image.png')
-        self.image = pygame.transform.scale(defender_image, ( , ))
+        self.image = pygame.transform.scale(defender_image, ())
 
 
     def defender_shoot(self):
