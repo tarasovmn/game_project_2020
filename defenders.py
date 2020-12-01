@@ -1,6 +1,6 @@
 import pygame
 import os
-from enemies import *
+from enemies import Enemy
 
 
 class Defender(pygame.sprite.Sprite):
@@ -8,10 +8,10 @@ class Defender(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         defender_image = pygame.image.load('defender_image.png')
         self.image = pygame.transform.scale(defender_image, (10, 10))
-        global reach_radius
-        reach_radius = 70
+        self.reach_radius = 70
+        self.rect = self.image.get_rect()
 
-    def defender_draw(self):
+    def draw(self):
         """
         This function draws the defender in the place of mouse click
         """
@@ -20,10 +20,10 @@ class Defender(pygame.sprite.Sprite):
                 self.rect.x, self.rect.y = event.pos
                 self.image(event.pos)
 
-    def defender_shoot(self):
+    def shoot(self, enemy):
         """
         This function is responsible for making defenders shoot at enemies
         """
         if (self.rect.x - enemy.rect.x) ** 2 + (self.rect.y - enemy.rect.y) ** 2 \
-                < reach_radius ** 2:
+                < self.reach_radius ** 2:
             enemy.hp -= 1

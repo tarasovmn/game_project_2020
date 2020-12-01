@@ -16,7 +16,3 @@ class Enemy(pygame.sprite.Sprite):
         self.hp = 10
         self.points = 1
 
-    def process(self):
-        if self.hp <= 0:
-            player.score += self.points
-            self.kill()
