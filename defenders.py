@@ -12,6 +12,7 @@ class Defender(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.coordinates = coord
         self.screen = screen
+        print(coord)
 
     def draw(self):
         """
@@ -23,6 +24,7 @@ class Defender(pygame.sprite.Sprite):
         """
         This function is responsible for making defenders shoot at enemies
         """
-        if (self.rect.x - enemy.rect.x) ** 2 + (self.rect.y - enemy.rect.y) ** 2 \
+        if (self.coordinates[0] - enemy.rect.x) ** 2 + (self.coordinates[1] - enemy.rect.y) ** 2 \
                 < self.reach_radius ** 2:
             enemy.hp -= 1
+
