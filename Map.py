@@ -72,7 +72,7 @@ class Karta:
                 road += [[int((self.Road[i][0] * t + self.Road[i + 1][0] * (1 - t))), int(
                     (self.Road[i][1] * t + self.Road[i + 1][1] * (1 - t)))]]
                 t += 0.251
-        for deltay in range(0, 300, 10):
+        for deltay in range(0, 100, 10):
             for tck in road:
                 for lol in [-1, 1]:
                     x = tck[0]
