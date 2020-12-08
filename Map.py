@@ -6,7 +6,7 @@ FPS = 30
 Ecrx = 1200
 Ecry = 720
 screen = pygame.display.set_mode((Ecrx, Ecry))
-screen.fill((100, 200, 0))
+screen.fill((33, 7, 56))
 
 
 class Karta:
@@ -47,11 +47,11 @@ class Karta:
         :return: нан
         """
         for pos in self.Road:
-            pygame.draw.circle(screen, [0, 0, 0], pos, 12)
-        pygame.draw.lines(screen, [0, 0, 0], False, self.Road, 24)
+            pygame.draw.circle(screen, [255, 0, 191], pos, 12)
+        pygame.draw.lines(screen, [255, 0, 191], False, self.Road, 24)
         for pos in self.Road:
-            pygame.draw.circle(screen, [200, 100, 0], pos, 10)
-        pygame.draw.lines(screen, [200, 100, 0], False, self.Road, 20)
+            pygame.draw.circle(screen, [33, 7, 56], pos, 10)
+        pygame.draw.lines(screen, [33, 7, 56], False, self.Road, 20)
 
     def generate_buildings(self, r):
         min_x, min_y, max_x, max_y = 1000, 1000, 0, 0
@@ -92,4 +92,4 @@ class Karta:
 
     def draw_buildings(self, r):
         for coor in self.Buildings:
-            pygame.draw.circle(screen, [51, 35, 18], [coor[0], coor[1]], r)
+            pygame.draw.circle(screen, [255, 0, 191], [coor[0], coor[1]], r)
