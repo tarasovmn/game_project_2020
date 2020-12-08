@@ -3,8 +3,6 @@ from Map import Karta
 from enemies import Enemy
 from defenders import Defender
 
-# Эта функция должна быть не здесь, но пока так
-
 pygame.display.update()
 clock = pygame.time.Clock()
 
@@ -21,9 +19,11 @@ class Game:
         self.clock = pygame.time.Clock()
         self.count = 0
 
-        self.Novaya_Karta = Karta()
+        self.Novaya_Karta = Karta(self.screen, 20)
         self.Novaya_Karta.generate_road()
-        self.Novaya_Karta.generate_buildings(20)
+        self.Novaya_Karta.generate_frame()
+        self.Novaya_Karta.generate_buildings()
+        self.Novaya_Karta.generate_environment()
         self.Enemies = []
         self.Enemies.append(Enemy(self.Novaya_Karta.Road[0]))
         self.Towers = []
@@ -64,7 +64,7 @@ class Game:
         """
         self.screen.fill((33, 7, 56))
         self.Novaya_Karta.draw_road()
-        self.Novaya_Karta.draw_buildings(20)
+        self.Novaya_Karta.draw_buildings()
         self.check_dead_enemies()
         for enemy in self.Enemies:
             enemy.move(self.Novaya_Karta.Road)

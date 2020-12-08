@@ -10,11 +10,19 @@ screen.fill((33, 7, 56))
 
 
 class Karta:
-    FPS = 30
-    Ecrx = 1200
-    Ecry = 720
-    Road = []
-    Buildings = []
+    def __init__(self, scren, r):
+        self.r = r
+        self.screen = scren
+        self.FPS = 30
+        self.Ecrx = 1200
+        self.Ecry = 720
+        self.Road = []
+        self.Buildings = []
+        self.min_x, self.min_y, self.max_x, self.max_y = 1000, 1000, 0, 0
+        self.road = [[-1000, -100]]
+        self.decor = [[-1000, -100]]
+        self.tower_image = pygame.transform.scale(pygame.image.load('Башня.png'), (6 * self.r, 6 * self.r))
+        self.decor_image = pygame.transform.scale(pygame.image.load('ПЛЭЙ.gif'), (4 * self.r, 4 * self.r))
 
     def generate_road(self):
         """
@@ -25,7 +33,7 @@ class Karta:
         y = self.Ecry / 2
         shag = 0
         massiv = [[int(x), int(y)]]
-        while x < 9 * self.Ecrx / 10 - 50:
+        while x < 8 * self.Ecrx / 10 - 50:
             shag += 1
             dl = randint(-100, 100)
             if dl == 0:
@@ -48,48 +56,71 @@ class Karta:
         """
         for pos in self.Road:
             pygame.draw.circle(screen, [255, 0, 191], pos, 12)
-        pygame.draw.lines(screen, [255, 0, 191], False, self.Road, 24)
+        pygame.draw.lines(screen, [255, 0, 191], False, self.Road, self.r + 4)
         for pos in self.Road:
             pygame.draw.circle(screen, [33, 7, 56], pos, 10)
-        pygame.draw.lines(screen, [33, 7, 56], False, self.Road, 20)
+        pygame.draw.lines(screen, [33, 7, 56], False, self.Road, self.r)
 
-    def generate_buildings(self, r):
-        min_x, min_y, max_x, max_y = 1000, 1000, 0, 0
-        road = [[-100, -100]]
-        buildings = [[-100, -100]]
+    def generate_frame(self):
         for pos in self.Road:
-            min_x = min(min_x, pos[0])
-            max_x = max(max_x, pos[0])
-            min_y = min(min_y, pos[1])
-            max_y = max(max_y, pos[1])
-        x = min_x
-        y = min_y - r
-        if y < 100:
-            y = 100
+            self.min_x = min(self.min_x, pos[0])
+            self.max_x = max(self.max_x, pos[0])
+            self.min_y = min(self.min_y, pos[1])
+            self.max_y = max(self.max_y, pos[1])
         for i in range(len(self.Road) - 1):
             t = 0.0
             while t < 1:
-                road += [[int((self.Road[i][0] * t + self.Road[i + 1][0] * (1 - t))), int(
+                self.road += [[int((self.Road[i][0] * t + self.Road[i + 1][0] * (1 - t))), int(
                     (self.Road[i][1] * t + self.Road[i + 1][1] * (1 - t)))]]
                 t += 0.251
+
+    def generate_buildings(self):
+        buildings = [[-100, -100]]
         for deltay in range(0, 100, 10):
-            for tck in road:
+            for tck in self.road:
                 for lol in [-1, 1]:
                     x = tck[0]
                     y = tck[1] + lol * deltay
-                    if y < min_y - 2 * r or y > max_y + 2 * r:
+                    if y < self.min_y - 2 * self.r or y > self.max_y + 2 * self.r:
                         continue
                     zanyato = False
-                    for coord in road:
-                        if (coord[0] - x) ** 2 + (coord[1] - y) ** 2 < (r + 13) ** 2:
+                    for coord in self.road:
+                        if (coord[0] - x) ** 2 + (coord[1] - y) ** 2 < (self.r + 13) ** 2:
                             zanyato = True
                     for coord in buildings:
-                        if (coord[0] - x) ** 2 + (coord[1] - y) ** 2 < 4 * r * r:
+                        if (coord[0] - x) ** 2 + (coord[1] - y) ** 2 < 4 * self.r * self.r:
                             zanyato = True
                     if not zanyato:
                         buildings += [[x, y]]
         self.Buildings = buildings
 
-    def draw_buildings(self, r):
+    def generate_environment(self):
+        mega_buildings = [[-100, -100]]
+        for delay in range(0, 600, 10):
+            for tsk in self.road:
+                for kek in [-1, 1]:
+                    x = tsk[0]
+                    y = tsk[1] + kek * delay
+                    if y < self.min_y - 2 * self.r or y > self.max_y + 2 * self.r:
+                        continue
+                    zanyat = False
+                    for coord1 in self.road:
+                        if (coord1[0] - x) ** 2 + (coord1[1] - y) ** 2 < (5 * self.r + 13) ** 2:
+                            zanyat = True
+                    for coord1 in mega_buildings:
+                        if (coord1[0] - x) ** 2 + (coord1[1] - y) ** 2 < 100 * self.r * self.r:
+                            zanyat = True
+                    for coord1 in self.Buildings:
+                        if (coord1[0] - x) ** 2 + (coord1[1] - y) ** 2 < 25 * self.r * self.r:
+                            zanyat = True
+                    if not zanyat:
+                        mega_buildings += [[x, y]]
+        self.decor = mega_buildings
+
+    def draw_buildings(self):
+        self.screen.blit(self.tower_image,
+                         [self.Road[len(self.Road) - 1][0], self.Road[len(self.Road) - 1][1] - 3 * self.r])
         for coor in self.Buildings:
-            pygame.draw.circle(screen, [255, 0, 191], [coor[0], coor[1]], r)
+            pygame.draw.circle(screen, [255, 0, 191], [coor[0], coor[1]], self.r)
+        for coo in self.decor:
+            self.screen.blit(self.decor_image, [coo[0] - 2 * self.r, coo[1] - 2 * self.r])
