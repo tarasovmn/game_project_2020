@@ -17,7 +17,7 @@ class Game:
         self.Ecrx = 1200
         self.Ecry = 720
         self.screen = pygame.display.set_mode((self.Ecrx, self.Ecry))
-        self.screen.fill((100, 200, 0))
+        self.screen.fill((33, 7, 56))
         self.clock = pygame.time.Clock()
 
         self.Novaya_Karta = Karta()
@@ -27,12 +27,6 @@ class Game:
         self.Enemies.append(Enemy(self.Novaya_Karta.Road[0]))
         self.Towers = []
         self.finished = False
-
-
-    def draw_tower(self, x, y, r):
-        """ draws tower (rect)"""
-        r = int(r)
-        pygame.draw.rect(self.screen, [100, 100, 100], [[int(x) - r // 2, int(y) - r // 2], [r, r]])
 
     def shag_igry(self):
         """
@@ -63,7 +57,7 @@ class Game:
         draws all existing objects
         :return:
         """
-        self.screen.fill((100, 200, 0))
+        self.screen.fill((33, 7, 56))
         self.Novaya_Karta.draw_road()
         self.Novaya_Karta.draw_buildings(20)
         self.check_dead_enemies()
@@ -72,4 +66,5 @@ class Game:
             enemy.draw(self.screen)
         for tower in self.Towers:
             tower.draw()
+            tower.shoot(enemy)
         pygame.display.update()
