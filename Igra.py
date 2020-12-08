@@ -64,7 +64,8 @@ class Game:
         for enemy in self.Enemies:
             enemy.move(self.Novaya_Karta.Road)
             enemy.draw(self.screen)
+            for tower in self.Towers:
+                tower.shoot(enemy)
         for tower in self.Towers:
             tower.draw()
-            tower.shoot(enemy)
         pygame.display.update()
