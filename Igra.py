@@ -19,6 +19,7 @@ class Game:
         self.screen = pygame.display.set_mode((self.Ecrx, self.Ecry))
         self.screen.fill((33, 7, 56))
         self.clock = pygame.time.Clock()
+        self.count = 0
 
         self.Novaya_Karta = Karta()
         self.Novaya_Karta.generate_road()
@@ -33,7 +34,11 @@ class Game:
         makes all calculations
         :return: NONE
         """
+        self.count += 1
         clock.tick(self.FPS)
+        if self.count / self.FPS == 2:
+            self.Enemies.append(Enemy(self.Novaya_Karta.Road[0]))
+            self.count = 0
         for event in pygame.event.get():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if (event.button == 1) or (event.button == 3):

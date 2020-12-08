@@ -50,3 +50,5 @@ class Enemy(pygame.sprite.Sprite):
         """
         self.rect = self.image.get_rect(center=(self.x, self.y))
         screen.blit(self.image, self.rect)
+
+
