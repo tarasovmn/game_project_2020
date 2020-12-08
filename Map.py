@@ -53,7 +53,7 @@ class Karta:
             pygame.draw.circle(screen, [200, 100, 0], pos, 10)
         pygame.draw.lines(screen, [200, 100, 0], False, self.Road, 20)
 
-    def generare_buildings(self, r):
+    def generate_buildings(self, r):
         min_x, min_y, max_x, max_y = 1000, 1000, 0, 0
         road = [[-100, -100]]
         buildings = [[-100, -100]]

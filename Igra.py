@@ -1,5 +1,6 @@
 import pygame
 from Map import Karta
+from enemies import Enemy
 from defenders import Defender
 
 # Эта функция должна быть не здесь, но пока так
@@ -21,17 +22,20 @@ class Game:
 
         self.Novaya_Karta = Karta()
         self.Novaya_Karta.generate_road()
-        self.Novaya_Karta.generare_buildings(20)
+        self.Novaya_Karta.generate_buildings(20)
         self.Enemies = []
+        self.Enemies.append(Enemy(self.Novaya_Karta.Road[0]))
         self.Towers = []
         self.finished = False
+
+    # 3enemies = {enemy.draw()for i in range 10}
 
     def draw_tower(self, x, y, r):
         """ draws tower (rect)"""
         r = int(r)
         pygame.draw.rect(self.screen, [100, 100, 100], [[int(x) - r // 2, int(y) - r // 2], [r, r]])
 
-    def shag_Igry(self):
+    def shag_igry(self):
         """
         makes all calculations
         :return: NONE
@@ -47,13 +51,26 @@ class Game:
             if event.type == pygame.QUIT:
                 self.finished = True
 
+    def check_dead_enemies(self):
+        new_Enemies = []
+        for enemy in self.Enemies:
+            enemy.check_if_alive()
+            if enemy.is_alive:
+                new_Enemies.append(enemy)
+        self.Enemies = new_Enemies
+
     def obnovleniye_ecrana(self):
         """
         draws all existing objects
         :return:
         """
+        self.screen.fill((100, 200, 0))
         self.Novaya_Karta.draw_road()
         self.Novaya_Karta.draw_buildings(20)
+        self.check_dead_enemies()
+        for enemy in self.Enemies:
+            enemy.move(self.Novaya_Karta.Road)
+            enemy.draw(self.screen)
         for tower in self.Towers:
             tower.draw()
         pygame.display.update()
