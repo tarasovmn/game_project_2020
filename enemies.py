@@ -41,7 +41,6 @@ class Enemy(pygame.sprite.Sprite):
     def check_if_alive(self):
         if self.hp <= 0:
             self.is_alive = False
-        print(self.hp)
 
 
     def draw(self, screen):
