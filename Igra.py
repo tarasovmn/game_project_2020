@@ -28,7 +28,6 @@ class Game:
         self.Towers = []
         self.finished = False
 
-    # 3enemies = {enemy.draw()for i in range 10}
 
     def draw_tower(self, x, y, r):
         """ draws tower (rect)"""
