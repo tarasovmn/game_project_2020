@@ -76,8 +76,8 @@ class Karta:
             for tck in road:
                 for lol in [-1, 1]:
                     x = tck[0]
-                    y = tck[1] + lol*deltay
-                    if y < min_y - 2*r or y > max_y + 2*r:
+                    y = tck[1] + lol * deltay
+                    if y < min_y - 2 * r or y > max_y + 2 * r:
                         continue
                     zanyato = False
                     for coord in road:

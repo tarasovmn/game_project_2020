@@ -19,7 +19,6 @@ class Defender(pygame.sprite.Sprite):
         """
         self.screen.blit(self.image, self.coordinates)
 
-
     def shoot(self, enemy):
         """
         This function is responsible for making defenders shoot at enemies
