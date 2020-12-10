@@ -5,7 +5,7 @@ from defenders import Defender
 
 pygame.display.update()
 clock = pygame.time.Clock()
-score = 0
+
 
 class Game:
     def __init__(self):
