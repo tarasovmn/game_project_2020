@@ -1,8 +1,4 @@
-import os
 import pygame
-import Map
-import random
-
 
 class Enemy(pygame.sprite.Sprite):
     def __init__(self, startpoint):
@@ -42,12 +38,9 @@ class Enemy(pygame.sprite.Sprite):
         if self.hp <= 0:
             self.is_alive = False
 
-
     def draw(self, screen):
         """
         Функция рисует врага по его текущим координатам
         """
         self.rect = self.image.get_rect(center=(self.x, self.y))
         screen.blit(self.image, self.rect)
-
-

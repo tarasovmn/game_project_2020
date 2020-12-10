@@ -1,6 +1,5 @@
 import pygame
-import os
-from enemies import Enemy
+from Map import screen
 
 
 class Defender(pygame.sprite.Sprite):
@@ -8,7 +7,7 @@ class Defender(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         defender_image = pygame.image.load('defender_image.png')
         self.image = pygame.transform.scale(defender_image, (25, 25))
-        self.reach_radius = 70
+        self.reach_radius = 100
         self.rect = self.image.get_rect(center=coord)
         self.coordinates = coord
         self.screen = screen
@@ -25,4 +24,6 @@ class Defender(pygame.sprite.Sprite):
         """
         if (self.coordinates[0] - enemy.rect.x) ** 2 + (self.coordinates[1] - enemy.rect.y) ** 2 \
                 < self.reach_radius ** 2:
+            pygame.draw.line(screen, (0, 0, 0), (self.coordinates[0], self.coordinates[1]),
+                             (enemy.rect.x, enemy.rect.y), 2)
             enemy.hp -= 1

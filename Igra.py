@@ -5,7 +5,7 @@ from defenders import Defender
 
 pygame.display.update()
 clock = pygame.time.Clock()
-
+score = 0
 
 class Game:
     def __init__(self):
@@ -50,12 +50,12 @@ class Game:
                 self.finished = True
 
     def check_dead_enemies(self):
-        new_Enemies = []
+        new_enemies = []
         for enemy in self.Enemies:
             enemy.check_if_alive()
             if enemy.is_alive:
-                new_Enemies.append(enemy)
-        self.Enemies = new_Enemies
+                new_enemies.append(enemy)
+        self.Enemies = new_enemies
 
     def obnovleniye_ecrana(self):
         """
