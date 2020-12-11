@@ -13,7 +13,7 @@ class Enemy(pygame.sprite.Sprite):
         self.motion = [1, 0]  # определяет направление движения
         self.is_alive = True
 
-        self.hp = 50
+        self.hp = 500
         self.points = 1
 
     def move(self, massiv):

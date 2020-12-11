@@ -1,7 +1,7 @@
 import pygame
 from Map import Karta
 from enemies import Enemy
-from defenders import Defender
+from defenders import Defender, StrongDefender
 
 pygame.display.update()
 clock = pygame.time.Clock()
@@ -41,11 +41,15 @@ class Game:
             self.count = 0
         for event in pygame.event.get():
             if event.type == pygame.MOUSEBUTTONDOWN:
-                if (event.button == 1) or (event.button == 3):
+                if event.button == 1:
                     cursor_pos = event.pos
+                    for tower in self.Towers:
+                        if (tower.coordinates[0] - cursor_pos[0]) ** 2 + (tower.coordinates[1] - cursor_pos[1]) ** 2 < 15 * 15:
+                            tower.change()
                     for coord in self.Novaya_Karta.Buildings:
                         if (coord[0] - cursor_pos[0]) ** 2 + (coord[1] - cursor_pos[1]) ** 2 < 15 * 15:
                             self.Towers += [Defender(self.screen, coord)]
+                            self.Novaya_Karta.Buildings.remove(coord)
             if event.type == pygame.QUIT:
                 self.finished = True
 
