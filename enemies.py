@@ -12,9 +12,11 @@ class Enemy(pygame.sprite.Sprite):
         self.corners_passed = 0
         self.motion = [1, 0]  # определяет направление движения
 
-        self.hp = 500
+        start_hp = 500
+        self.hp = start_hp
         self.points = 1
         self.coins = 1
+        self.hp_per_pix = start_hp / 50
 
     def move(self, massiv):
         self.x += self.vel * self.motion[0]
@@ -44,6 +46,8 @@ class Enemy(pygame.sprite.Sprite):
         """
         self.rect = self.image.get_rect(center=(self.x, self.y))
         screen.blit(self.image, self.rect)
+        pygame.draw.line(screen, (255, 255, 255), (self.x - 25, self.y + 30),
+                         (self.x - 25 + self.hp / self.hp_per_pix, self.y + 30), 3)
 
 
 class StrongEnemy(Enemy):
@@ -53,6 +57,8 @@ class StrongEnemy(Enemy):
         strong_enemy_image = pygame.image.load('strong_enemy_image.png')
         self.image = pygame.transform.scale(strong_enemy_image, (50, 50))
         self.rect = self.image.get_rect(center=startpoint)
-        self.hp = 1000
-        self.points = 2
+
+        start_hp = 500
+        self.hp = start_hp
+        self.points = 3
         self.coins = 2
