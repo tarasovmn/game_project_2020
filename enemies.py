@@ -14,6 +14,7 @@ class Enemy(pygame.sprite.Sprite):
 
         self.hp = 500
         self.points = 1
+        self.coins = 1
 
     def move(self, massiv):
         self.x += self.vel * self.motion[0]
@@ -54,3 +55,4 @@ class StrongEnemy(Enemy):
         self.rect = self.image.get_rect(center=startpoint)
         self.hp = 1000
         self.points = 2
+        self.coins = 2

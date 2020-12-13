@@ -7,10 +7,13 @@ pygame.display.update()
 clock = pygame.time.Clock()
 
 
-class Game:
+class Game(pygame.sprite.Sprite):
     def __init__(self):
         pygame.init()
 
+        #        pygame.sprite.Sprite.__init__(self)
+        #        backstage_image = pygame.image.load('backstage_image.png')
+        #        self.image = pygame.transform.scale(backstage_image, (1200, 720))
         self.FPS = 30
         self.Ecrx = 1200
         self.Ecry = 720
@@ -19,6 +22,7 @@ class Game:
         self.clock = pygame.time.Clock()
         self.count = 0
         self.score = 0
+        self.coins = 0
 
         self.Novaya_Karta = Karta(self.screen, 20)
         self.Novaya_Karta.generate_road()
@@ -62,6 +66,7 @@ class Game:
                 new_enemies.append(enemy)
             else:
                 self.score += enemy.points
+                self.coins += enemy.coins
         self.Enemies = new_enemies
 
     def obnovleniye_ecrana(self):
@@ -73,6 +78,17 @@ class Game:
         self.Novaya_Karta.draw_road()
         self.Novaya_Karta.draw_buildings()
         self.check_dead_enemies()
+
+        score = str(self.score)
+        f1 = pygame.font.Font(None, 40)
+        text_score = f1.render(score, 0, (255, 255, 255))
+        self.screen.blit(text_score, (5, 5))
+
+        coins = str(self.coins)
+        f2 = pygame.font.Font(None, 40)
+        text_coins = f2.render(coins, 0, (255, 255, 255))
+        self.screen.blit(text_coins, (5, 30))
+
         for enemy in self.Enemies:
             enemy.move(self.Novaya_Karta.Road)
             enemy.draw(self.screen)

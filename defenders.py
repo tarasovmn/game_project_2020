@@ -2,6 +2,9 @@ import pygame
 from Map import screen
 
 
+# from Igra import Game
+
+
 class Defender(pygame.sprite.Sprite):
     def __init__(self, screen, coord):
         pygame.sprite.Sprite.__init__(self)
@@ -17,6 +20,8 @@ class Defender(pygame.sprite.Sprite):
         """
         This function draws the defender in the place of mouse click
         """
+        # if Game.coins >= 1:
+        #    Game.coins -= 1
         self.screen.blit(self.image, self.rect)
 
     def shoot(self, enemy):
@@ -26,7 +31,7 @@ class Defender(pygame.sprite.Sprite):
         if (self.coordinates[0] - enemy.rect.x) ** 2 + (self.coordinates[1] - enemy.rect.y) ** 2 \
                 < self.reach_radius ** 2:
             pygame.draw.line(screen, (0, 0, 0), (self.coordinates[0], self.coordinates[1]),
-                             (enemy.rect.x, enemy.rect.y), 2)
+                             (enemy.rect.x + 25, enemy.rect.y + 25), 2)
             enemy.hp -= self.damage
 
     def change(self):
