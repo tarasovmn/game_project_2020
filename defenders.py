@@ -32,4 +32,3 @@ class Defender(pygame.sprite.Sprite):
     def change(self):
         self.image = pygame.transform.scale(pygame.image.load('strong_defender_image.png'), (25, 25))
         self.damage = 10
-

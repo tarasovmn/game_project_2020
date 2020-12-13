@@ -11,7 +11,6 @@ class Enemy(pygame.sprite.Sprite):
         self.vel = 2
         self.corners_passed = 0
         self.motion = [1, 0]  # определяет направление движения
-        self.is_alive = True
 
         self.hp = 500
         self.points = 1
@@ -36,8 +35,7 @@ class Enemy(pygame.sprite.Sprite):
                 self.corners_passed += 1
 
     def check_if_alive(self):
-        if self.hp <= 0:
-            self.is_alive = False
+        return self.hp > 0
 
     def draw(self, screen):
         """
@@ -45,3 +43,14 @@ class Enemy(pygame.sprite.Sprite):
         """
         self.rect = self.image.get_rect(center=(self.x, self.y))
         screen.blit(self.image, self.rect)
+
+
+class StrongEnemy(Enemy):
+    def __init__(self, startpoint):
+        super().__init__(startpoint)
+        self.vel = 3
+        strong_enemy_image = pygame.image.load('strong_enemy_image.png')
+        self.image = pygame.transform.scale(strong_enemy_image, (50, 50))
+        self.rect = self.image.get_rect(center=startpoint)
+        self.hp = 1000
+        self.points = 2

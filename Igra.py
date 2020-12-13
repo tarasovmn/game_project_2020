@@ -1,7 +1,7 @@
 import pygame
 from Map import Karta
 from enemies import Enemy
-from defenders import Defender, StrongDefender
+from defenders import Defender
 
 pygame.display.update()
 clock = pygame.time.Clock()
@@ -18,6 +18,7 @@ class Game:
         self.screen.fill((33, 7, 56))
         self.clock = pygame.time.Clock()
         self.count = 0
+        self.score = 0
 
         self.Novaya_Karta = Karta(self.screen, 20)
         self.Novaya_Karta.generate_road()
@@ -44,7 +45,8 @@ class Game:
                 if event.button == 1:
                     cursor_pos = event.pos
                     for tower in self.Towers:
-                        if (tower.coordinates[0] - cursor_pos[0]) ** 2 + (tower.coordinates[1] - cursor_pos[1]) ** 2 < 15 * 15:
+                        if (tower.coordinates[0] - cursor_pos[0]) ** 2 + (
+                                tower.coordinates[1] - cursor_pos[1]) ** 2 < 15 * 15:
                             tower.change()
                     for coord in self.Novaya_Karta.Buildings:
                         if (coord[0] - cursor_pos[0]) ** 2 + (coord[1] - cursor_pos[1]) ** 2 < 15 * 15:
@@ -56,9 +58,10 @@ class Game:
     def check_dead_enemies(self):
         new_enemies = []
         for enemy in self.Enemies:
-            enemy.check_if_alive()
-            if enemy.is_alive:
+            if enemy.check_if_alive():
                 new_enemies.append(enemy)
+            else:
+                self.score += enemy.points
         self.Enemies = new_enemies
 
     def obnovleniye_ecrana(self):
