@@ -23,7 +23,7 @@ class Game(pygame.sprite.Sprite):
         self.clock = pygame.time.Clock()
         self.count = 0
         self.score = 0
-        self.coins = 0
+        self.coins = 10
 
         self.Novaya_Karta = Karta(self.screen, 20)
         self.Novaya_Karta.generate_road()
@@ -55,11 +55,15 @@ class Game(pygame.sprite.Sprite):
                     for tower in self.Towers:
                         if (tower.coordinates[0] - cursor_pos[0]) ** 2 + (
                                 tower.coordinates[1] - cursor_pos[1]) ** 2 < 15 * 15:
-                            tower.change()
+                            if self.coins >= 1:
+                                tower.change()
+                                self.coins -= 1
                     for coord in self.Novaya_Karta.Buildings:
                         if (coord[0] - cursor_pos[0]) ** 2 + (coord[1] - cursor_pos[1]) ** 2 < 15 * 15:
-                            self.Towers += [Defender(self.screen, coord)]
-                            self.Novaya_Karta.Buildings.remove(coord)
+                            if self.coins >= 1:
+                                self.Towers += [Defender(self.screen, coord)]
+                                self.Novaya_Karta.Buildings.remove(coord)
+                                self.coins -= 1
             if event.type == pygame.QUIT:
                 self.finished = True
 
@@ -86,12 +90,12 @@ class Game(pygame.sprite.Sprite):
 
         score = str(self.score)
         f1 = pygame.font.Font(None, 40)
-        text_score = f1.render(score, 0, (255, 255, 255))
+        text_score = f1.render(score, 0, (0, 0, 0))
         self.screen.blit(text_score, (5, 5))
 
         coins = str(self.coins)
         f2 = pygame.font.Font(None, 40)
-        text_coins = f2.render(coins, 0, (255, 255, 255))
+        text_coins = f2.render(coins, 0, (0, 0, 0))
         self.screen.blit(text_coins, (5, 30))
 
         for enemy in self.Enemies:
@@ -104,5 +108,5 @@ class Game(pygame.sprite.Sprite):
             for tower in self.Towers:
                 tower.shoot(enemy)
         for tower in self.Towers:
-            tower.draw()
+            tower.draw(self)
         pygame.display.update()
