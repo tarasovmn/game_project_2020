@@ -76,26 +76,20 @@ class StrongEnemy(Enemy):
         self.vel = 3
 
         self.strongenemy_sprites = [pygame.image.load('0 (2).gif'), pygame.image.load('1 (2).gif'),
-                              pygame.image.load('2 (2).gif'), pygame.image.load('3 (2).gif'),
-                              pygame.image.load('4 (2).gif'), pygame.image.load('5 (2).gif'),
-                              pygame.image.load('6 (2).gif'), pygame.image.load('7 (2).gif'),
-                              pygame.image.load('8 (2).gif'), pygame.image.load('9 (2).gif')]
+                                    pygame.image.load('2 (2).gif'), pygame.image.load('3 (2).gif'),
+                                    pygame.image.load('4 (2).gif'), pygame.image.load('5 (2).gif'),
+                                    pygame.image.load('6 (2).gif'), pygame.image.load('7 (2).gif'),
+                                    pygame.image.load('8 (2).gif'), pygame.image.load('9 (2).gif')]
         self.strongenemy_sprites_rect = []
         for i in range(0, len(self.strongenemy_sprites)):
             self.strongenemy_sprites[i] = pygame.transform.scale(self.strongenemy_sprites[i], (100, 80))
             self.strongenemy_sprites_rect.append(self.strongenemy_sprites[i].get_rect(center=startpoint))
         self.k = 0  # номер спрайта в массиве
 
-        #self.corners_passed = 0
-        #self.motion = [1, 0]  # определяет направление движения
         self.image = self.strongenemy_sprites[0]
         self.rect = self.strongenemy_sprites_rect[0]
 
-        #strong_enemy_image = pygame.image.load('strong_enemy_image.png')
-        #self.image = pygame.transform.scale(strong_enemy_image, (50, 50))
-        #self.rect = self.image.get_rect(center=startpoint)
-
-        start_hp = 500
+        start_hp = 800
         self.hp = start_hp
         self.points = 3
         self.coins = 2
