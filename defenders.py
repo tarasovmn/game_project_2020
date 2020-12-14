@@ -1,8 +1,6 @@
 import pygame
 from Map import screen
 
-#from Igra import Game
-
 
 class Defender(pygame.sprite.Sprite):
     def __init__(self, screen, coord):
