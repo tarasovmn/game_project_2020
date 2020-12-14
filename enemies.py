@@ -12,7 +12,7 @@ class Enemy(pygame.sprite.Sprite):
                               pygame.image.load('8.gif'), pygame.image.load('9.gif')]
         self.enemy_sprites_rect = []
         for i in range(0, len(self.enemy_sprites)):
-            self.enemy_sprites[i] = pygame.transform.scale(self.enemy_sprites[i], (80, 100))
+            self.enemy_sprites[i] = pygame.transform.scale(self.enemy_sprites[i], (50, 50))
             self.enemy_sprites_rect.append(self.enemy_sprites[i].get_rect(center=startpoint))
         self.k = 0  # номер спрайта в массиве
         self.x, self.y = startpoint
@@ -66,7 +66,7 @@ class Enemy(pygame.sprite.Sprite):
         """
         self.rect = self.image.get_rect(center=(self.x, self.y))
         screen.blit(self.image, self.rect)
-        pygame.draw.line(screen, (255, 255, 255), (self.x - 25, self.y + 30),
+        pygame.draw.line(screen, (0, 0, 0), (self.x - 25, self.y + 30),
                          (self.x - 25 + self.hp / self.hp_per_pix, self.y + 30), 3)
 
 
@@ -82,7 +82,7 @@ class StrongEnemy(Enemy):
                                     pygame.image.load('8 (2).gif'), pygame.image.load('9 (2).gif')]
         self.strongenemy_sprites_rect = []
         for i in range(0, len(self.strongenemy_sprites)):
-            self.strongenemy_sprites[i] = pygame.transform.scale(self.strongenemy_sprites[i], (100, 80))
+            self.strongenemy_sprites[i] = pygame.transform.scale(self.strongenemy_sprites[i], (50, 50))
             self.strongenemy_sprites_rect.append(self.strongenemy_sprites[i].get_rect(center=startpoint))
         self.k = 0  # номер спрайта в массиве
 
