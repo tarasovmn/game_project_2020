@@ -97,6 +97,8 @@ class Game(pygame.sprite.Sprite):
         text_coins = f2.render('coins: ' + coins, 0, (255, 0, 191))
         self.screen.blit(text_coins, (5, 30))
 
+        for tower in self.Towers:
+            tower.draw(self)
         for enemy in self.Enemies:
             enemy.time += 1
             enemy.sprite_update()
@@ -104,6 +106,4 @@ class Game(pygame.sprite.Sprite):
             enemy.draw(self.screen)
             for tower in self.Towers:
                 tower.shoot(enemy)
-        for tower in self.Towers:
-            tower.draw(self)
         pygame.display.update()
