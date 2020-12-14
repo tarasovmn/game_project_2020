@@ -9,6 +9,9 @@ clock = pygame.time.Clock()
 
 class Game(pygame.sprite.Sprite):
     def __init__(self):
+        """
+        initialisation
+        """
         pygame.init()
 
         pygame.sprite.Sprite.__init__(self)
@@ -67,6 +70,10 @@ class Game(pygame.sprite.Sprite):
                 self.finished = True
 
     def check_dead_enemies(self):
+        """
+        adds points and coins
+        :return:
+        """
         new_enemies = []
         for enemy in self.Enemies:
             if enemy.check_if_alive():
