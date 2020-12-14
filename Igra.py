@@ -3,7 +3,6 @@ from Map import Karta
 from enemies import Enemy, StrongEnemy
 from defenders import Defender
 
-
 pygame.display.update()
 clock = pygame.time.Clock()
 
@@ -23,7 +22,7 @@ class Game(pygame.sprite.Sprite):
         self.clock = pygame.time.Clock()
         self.count = 0
         self.score = 0
-        self.coins = 10
+        self.coins = 5
 
         self.Novaya_Karta = Karta(self.screen, 20)
         self.Novaya_Karta.generate_road()
@@ -90,19 +89,17 @@ class Game(pygame.sprite.Sprite):
 
         score = str(self.score)
         f1 = pygame.font.Font(None, 40)
-        text_score = f1.render(score, 0, (0, 0, 0))
+        text_score = f1.render('score: ' + score, 0, (255, 0, 191))
         self.screen.blit(text_score, (5, 5))
 
         coins = str(self.coins)
         f2 = pygame.font.Font(None, 40)
-        text_coins = f2.render(coins, 0, (0, 0, 0))
+        text_coins = f2.render('coins: ' + coins, 0, (255, 0, 191))
         self.screen.blit(text_coins, (5, 30))
 
         for enemy in self.Enemies:
             enemy.time += 1
             enemy.sprite_update()
-            # if enemy.time > 8 * self.FPS:
-                # enemy.time -= 8 * self.FPS
             enemy.move(self.Novaya_Karta.Road)
             enemy.draw(self.screen)
             for tower in self.Towers:
