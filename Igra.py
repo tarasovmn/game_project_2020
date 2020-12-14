@@ -1,7 +1,8 @@
 import pygame
 from Map import Karta
-from enemies import Enemy
+from enemies import Enemy, StrongEnemy
 from defenders import Defender
+
 
 pygame.display.update()
 clock = pygame.time.Clock()
@@ -11,14 +12,14 @@ class Game(pygame.sprite.Sprite):
     def __init__(self):
         pygame.init()
 
-        #        pygame.sprite.Sprite.__init__(self)
-        #        backstage_image = pygame.image.load('backstage_image.png')
-        #        self.image = pygame.transform.scale(backstage_image, (1200, 720))
+        pygame.sprite.Sprite.__init__(self)
+        bg = pygame.image.load("bg.png")
+        self.bg = pygame.transform.scale(bg, (1200, 720))
         self.FPS = 30
         self.Ecrx = 1200
         self.Ecry = 720
         self.screen = pygame.display.set_mode((self.Ecrx, self.Ecry))
-        self.screen.fill((33, 7, 56))
+        self.screen.fill((255, 255, 255))
         self.clock = pygame.time.Clock()
         self.count = 0
         self.score = 0
@@ -42,7 +43,10 @@ class Game(pygame.sprite.Sprite):
         self.count += 1
         clock.tick(self.FPS)
         if self.count / self.FPS == 2:
-            self.Enemies.append(Enemy(self.Novaya_Karta.Road[0]))
+            if len(self.Enemies) % 3 == 0:
+                self.Enemies.append(StrongEnemy(self.Novaya_Karta.Road[0]))
+            else:
+                self.Enemies.append(Enemy(self.Novaya_Karta.Road[0]))
             self.count = 0
         for event in pygame.event.get():
             if event.type == pygame.MOUSEBUTTONDOWN:
@@ -74,7 +78,8 @@ class Game(pygame.sprite.Sprite):
         draws all existing objects
         :return:
         """
-        self.screen.fill((33, 7, 56))
+        self.screen.fill((255, 255, 255))
+        self.screen.blit(self.bg, (0, 0))
         self.Novaya_Karta.draw_road()
         self.Novaya_Karta.draw_buildings()
         self.check_dead_enemies()
@@ -90,6 +95,10 @@ class Game(pygame.sprite.Sprite):
         self.screen.blit(text_coins, (5, 30))
 
         for enemy in self.Enemies:
+            enemy.time += 1
+            enemy.sprite_update()
+            # if enemy.time > 8 * self.FPS:
+                # enemy.time -= 8 * self.FPS
             enemy.move(self.Novaya_Karta.Road)
             enemy.draw(self.screen)
             for tower in self.Towers:

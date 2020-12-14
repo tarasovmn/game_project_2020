@@ -6,13 +6,13 @@ FPS = 30
 Ecrx = 1200
 Ecry = 720
 screen = pygame.display.set_mode((Ecrx, Ecry))
-screen.fill((33, 7, 56))
+screen.fill((255, 255, 255))
 
 
 class Karta:
-    def __init__(self, scren, r):
+    def __init__(self, screen, r):
         self.r = r
-        self.screen = scren
+        self.screen = screen
         self.FPS = 30
         self.Ecrx = 1200
         self.Ecry = 720
@@ -22,7 +22,7 @@ class Karta:
         self.road = [[-1000, -100]]
         self.decor = [[-1000, -100]]
         self.tower_image = pygame.transform.scale(pygame.image.load('tower_image.png'), (6 * self.r, 6 * self.r))
-        self.decor_image = pygame.transform.scale(pygame.image.load('decor_image.gif'), (4 * self.r, 4 * self.r))
+        self.decor_image = pygame.transform.scale(pygame.image.load('decor_image.png'), (4 * self.r, 4 * self.r))
 
     def generate_road(self):
         """
@@ -58,8 +58,8 @@ class Karta:
             pygame.draw.circle(screen, [255, 0, 191], pos, 12)
         pygame.draw.lines(screen, [255, 0, 191], False, self.Road, self.r + 4)
         for pos in self.Road:
-            pygame.draw.circle(screen, [33, 7, 56], pos, 10)
-        pygame.draw.lines(screen, [33, 7, 56], False, self.Road, self.r)
+            pygame.draw.circle(screen, [255, 255, 255], pos, 10)
+        pygame.draw.lines(screen, [255, 255, 255], False, self.Road, self.r)
 
     def generate_frame(self):
         for pos in self.Road:
@@ -122,5 +122,5 @@ class Karta:
                          [self.Road[len(self.Road) - 1][0], self.Road[len(self.Road) - 1][1] - 3 * self.r])
         for coor in self.Buildings:
             pygame.draw.circle(screen, [255, 0, 191], [coor[0], coor[1]], self.r)
-        for coo in self.decor:
-            self.screen.blit(self.decor_image, [coo[0] - 2 * self.r, coo[1] - 2 * self.r])
+        for coor in self.decor:
+            self.screen.blit(self.decor_image, [coor[0] - 2 * self.r, coor[1] - 2 * self.r])
