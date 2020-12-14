@@ -3,6 +3,10 @@ import pygame
 
 class Enemy(pygame.sprite.Sprite):
     def __init__(self, startpoint):
+        """
+        initialisation
+        :param startpoint: enemies start from this point
+        """
         self.time = 0
         pygame.sprite.Sprite.__init__(self)
         self.enemy_sprites = [pygame.image.load('0.gif'), pygame.image.load('1.gif'),
@@ -14,11 +18,11 @@ class Enemy(pygame.sprite.Sprite):
         for i in range(0, len(self.enemy_sprites)):
             self.enemy_sprites[i] = pygame.transform.scale(self.enemy_sprites[i], (50, 50))
             self.enemy_sprites_rect.append(self.enemy_sprites[i].get_rect(center=startpoint))
-        self.k = 0  # номер спрайта в массиве
+        self.k = 0  # number of sprite in the array
         self.x, self.y = startpoint
         self.vel = 2
         self.corners_passed = 0
-        self.motion = [1, 0]  # определяет направление движения
+        self.motion = [1, 0]  # defines direction of movement
         self.image = self.enemy_sprites[0]
         self.rect = self.enemy_sprites_rect[0]
 
@@ -29,16 +33,30 @@ class Enemy(pygame.sprite.Sprite):
         self.hp_per_pix = start_hp / 50
 
     def sprite_update(self):
+        """
+        makes enemies change their appearance
+        :return:
+        """
         self.k = (self.time // 2) % 10  # /2 чтобы каждые два кадра
         self.image = self.enemy_sprites[self.k]
         self.rect = self.enemy_sprites_rect[self.k]
 
     def move(self, massiv):
+        """
+        makes enemies go
+        :param massiv:
+        :return:
+        """
         self.x += self.vel * self.motion[0]
         self.y += self.vel * self.motion[1]
         self.check_angle(massiv)
 
     def check_angle(self, massiv):
+        """
+        makes enemies go on the road
+        :param massiv:
+        :return:
+        """
         if self.corners_passed == len(massiv) - 1:
             pass
         else:
@@ -58,11 +76,17 @@ class Enemy(pygame.sprite.Sprite):
                     self.corners_passed += 1
 
     def check_if_alive(self):
+        """
+        checks if enemy is alive
+        :return: enemy's hp
+        """
         return self.hp > 0
 
     def draw(self, screen):
         """
-        Функция рисует врага по его текущим координатам
+        draws enemy in it's current coordinates
+        :param screen: where to draw enemies
+        :return:
         """
         self.rect = self.image.get_rect(center=(self.x, self.y))
         screen.blit(self.image, self.rect)

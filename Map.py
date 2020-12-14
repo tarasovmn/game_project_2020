@@ -1,6 +1,7 @@
 import pygame
 from random import randint
 
+# screen params
 pygame.init()
 FPS = 30
 Ecrx = 1200
@@ -11,6 +12,11 @@ screen.fill((255, 255, 255))
 
 class Karta:
     def __init__(self, screen, r):
+        """
+        initialisation
+        :param screen:
+        :param r:
+        """
         self.r = r
         self.screen = screen
         self.FPS = 30
@@ -26,8 +32,8 @@ class Karta:
 
     def generate_road(self):
         """
-        генерирует массив точек, пригодный для построения по ним дороги
-        :return: собсна массив
+        generates array of points useful for drawing road on them
+        :return: array of points
         """
         x = self.Ecrx / 10
         y = self.Ecry / 2
@@ -51,7 +57,7 @@ class Karta:
 
     def draw_road(self):
         """
-        дорогу рисует
+        draws the road
         :return: нан
         """
         for pos in self.Road:
@@ -62,6 +68,10 @@ class Karta:
         pygame.draw.lines(screen, [255, 255, 255], False, self.Road, self.r)
 
     def generate_frame(self):
+        """
+        TODO
+        :return:
+        """
         for pos in self.Road:
             self.min_x = min(self.min_x, pos[0])
             self.max_x = max(self.max_x, pos[0])
@@ -75,6 +85,10 @@ class Karta:
                 t += 0.251
 
     def generate_buildings(self):
+        """
+        generate places for defenders
+        :return:
+        """
         buildings = [[-100, -100]]
         for deltay in range(0, 100, 10):
             for tck in self.road:
@@ -95,6 +109,10 @@ class Karta:
         self.Buildings = buildings
 
     def generate_environment(self):
+        """
+        creates decorations
+        :return:
+        """
         mega_buildings = [[-100, -100]]
         for delay in range(0, 600, 10):
             for tsk in self.road:
@@ -118,6 +136,10 @@ class Karta:
         self.decor = mega_buildings
 
     def draw_buildings(self):
+        """
+        draws empty places for defenders and decorations
+        :return:
+        """
         self.screen.blit(self.tower_image,
                          [self.Road[len(self.Road) - 1][0], self.Road[len(self.Road) - 1][1] - 3 * self.r])
         for coor in self.Buildings:
