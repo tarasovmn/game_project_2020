@@ -13,12 +13,10 @@ class Defender(pygame.sprite.Sprite):
         self.screen = screen
         self.damage = 1
 
-    def draw(self):
+    def draw(self, game):
         """
         This function draws the defender in the place of mouse click
         """
-        # if Game.coins >= 1:
-        #    Game.coins -= 1
         self.screen.blit(self.image, self.rect)
 
     def shoot(self, enemy):

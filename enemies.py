@@ -39,18 +39,23 @@ class Enemy(pygame.sprite.Sprite):
         self.check_angle(massiv)
 
     def check_angle(self, massiv):
-        if self.motion[0] == 1:
-            if self.x >= massiv[self.corners_passed + 1][0]:
-                self.x = massiv[self.corners_passed + 1][0]
-                next_y = (massiv[self.corners_passed + 2][1] - massiv[self.corners_passed + 1][1]) / abs(
-                    (massiv[self.corners_passed + 2][1] - massiv[self.corners_passed + 1][1]))
-                self.motion = [0, next_y]
-                self.corners_passed += 1
+        if self.corners_passed == len(massiv) - 1:
+            pass
         else:
-            if self.motion[1] * self.y > self.motion[1] * massiv[self.corners_passed + 1][1]:
-                self.y = massiv[self.corners_passed + 1][1]
-                self.motion = [1, 0]
-                self.corners_passed += 1
+            if self.motion[0] == 1:
+                if self.x >= massiv[self.corners_passed + 1][0]:
+                    self.x = massiv[self.corners_passed + 1][0]
+                    distance = massiv[self.corners_passed + 2][1] - massiv[self.corners_passed + 1][1]
+                    next_y = 1
+                    if distance != 0:
+                        next_y = distance / abs(distance)
+                    self.motion = [0, next_y]
+                    self.corners_passed += 1
+            else:
+                if self.motion[1] * self.y > self.motion[1] * massiv[self.corners_passed + 1][1]:
+                    self.y = massiv[self.corners_passed + 1][1]
+                    self.motion = [1, 0]
+                    self.corners_passed += 1
 
     def check_if_alive(self):
         return self.hp > 0
