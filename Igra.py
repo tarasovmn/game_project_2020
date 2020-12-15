@@ -84,6 +84,8 @@ class Game(pygame.sprite.Sprite):
         self.Enemies = new_enemies
 
     def end(self):
+        pygame.mixer.music.load('mac.mp3')  # не баг, а фича
+        pygame.mixer.music.play(0)
         bg = pygame.image.load('gameover(1).png')
         bg = pygame.transform.scale(bg, (1200, 720))
         self.screen.blit(bg, (0, 0))
