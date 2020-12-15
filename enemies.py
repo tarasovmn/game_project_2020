@@ -1,4 +1,5 @@
 import pygame
+from Map import Karta
 
 
 class Enemy(pygame.sprite.Sprite):
@@ -16,9 +17,9 @@ class Enemy(pygame.sprite.Sprite):
                               pygame.image.load('8.gif'), pygame.image.load('9.gif')]
         self.enemy_sprites_rect = []
         for i in range(0, len(self.enemy_sprites)):
-            self.enemy_sprites[i] = pygame.transform.scale(self.enemy_sprites[i], (50, 50))
+            self.enemy_sprites[i] = pygame.transform.scale(self.enemy_sprites[i], (60, 80))
             self.enemy_sprites_rect.append(self.enemy_sprites[i].get_rect(center=startpoint))
-        self.k = 0  # number of sprite in the array
+        self.k = 0  # sprite number in the array
         self.x, self.y = startpoint
         self.vel = 2
         self.corners_passed = 0
@@ -37,7 +38,7 @@ class Enemy(pygame.sprite.Sprite):
         makes enemies change their appearance
         :return:
         """
-        self.k = (self.time // 2) % 10  # /2 чтобы каждые два кадра
+        self.k = (self.time // 2) % 10  # every 2 frames sprite changes
         self.image = self.enemy_sprites[self.k]
         self.rect = self.enemy_sprites_rect[self.k]
 
@@ -75,6 +76,7 @@ class Enemy(pygame.sprite.Sprite):
                     self.motion = [1, 0]
                     self.corners_passed += 1
 
+
     def check_if_alive(self):
         """
         checks if enemy is alive
@@ -93,7 +95,6 @@ class Enemy(pygame.sprite.Sprite):
         pygame.draw.line(screen, (0, 0, 0), (self.x - 25, self.y + 30),
                          (self.x - 25 + self.hp / self.hp_per_pix, self.y + 30), 3)
 
-
 class StrongEnemy(Enemy):
     def __init__(self, startpoint):
         super().__init__(startpoint)
@@ -106,9 +107,9 @@ class StrongEnemy(Enemy):
                                     pygame.image.load('8 (2).gif'), pygame.image.load('9 (2).gif')]
         self.strongenemy_sprites_rect = []
         for i in range(0, len(self.strongenemy_sprites)):
-            self.strongenemy_sprites[i] = pygame.transform.scale(self.strongenemy_sprites[i], (50, 50))
+            self.strongenemy_sprites[i] = pygame.transform.scale(self.strongenemy_sprites[i], (80, 50))
             self.strongenemy_sprites_rect.append(self.strongenemy_sprites[i].get_rect(center=startpoint))
-        self.k = 0  # номер спрайта в массиве
+        self.k = 0  # sprite number in the array
 
         self.image = self.strongenemy_sprites[0]
         self.rect = self.strongenemy_sprites_rect[0]
@@ -119,6 +120,11 @@ class StrongEnemy(Enemy):
         self.coins = 2
 
     def sprite_update(self):
-        self.k = (self.time // 2) % 10
+        self.k = (self.time // 2) % 10 # every 2 frames sprite changes
         self.image = self.strongenemy_sprites[self.k]
         self.rect = self.strongenemy_sprites_rect[self.k]
+
+
+
+
+
