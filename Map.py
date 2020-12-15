@@ -142,7 +142,6 @@ class Karta:
         """
         self.screen.blit(self.tower_image,
                          [self.Road[len(self.Road) - 1][0], self.Road[len(self.Road) - 1][1] - 3 * self.r])
-        print(self.Road[len(self.Road) - 1][0], self.Road[len(self.Road) - 1][1] - 3 * self.r)
         for coord in self.Buildings:
             pygame.draw.circle(screen, [255, 0, 191], [coord[0], coord[1]], self.r)
         for coord in self.decor:

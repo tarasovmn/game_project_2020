@@ -2,6 +2,7 @@ import pygame
 from Map import Karta
 from enemies import Enemy, StrongEnemy
 from defenders import Defender
+from random import randint
 
 pygame.display.update()
 clock = pygame.time.Clock()
@@ -26,6 +27,7 @@ class Game(pygame.sprite.Sprite):
         self.count = 0
         self.score = 0
         self.coins = 5
+        self.number_of_wave = 0
 
         self.Novaya_Karta = Karta(self.screen, 20)
         self.Novaya_Karta.generate_road()
@@ -44,12 +46,17 @@ class Game(pygame.sprite.Sprite):
         """
         self.count += 1
         clock.tick(self.FPS)
-        if self.count / self.FPS == 2:
-            if len(self.Enemies) % 3 == 0:
-                self.Enemies.append(StrongEnemy(self.Novaya_Karta.Road[0]))
-            else:
-                self.Enemies.append(Enemy(self.Novaya_Karta.Road[0]))
+        if self.count < self.FPS * 25:
+            if self.count < self.FPS * 15:
+                if self.count % (self.FPS - self.number_of_wave) == 2:
+                    enemy_type = randint(0, 10)
+                    if enemy_type < self.number_of_wave:
+                        self.Enemies.append(StrongEnemy(self.Novaya_Karta.Road[0]))
+                    else:
+                        self.Enemies.append(Enemy(self.Novaya_Karta.Road[0]))
+        else:
             self.count = 0
+            self.number_of_wave += 1
         for event in pygame.event.get():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1:
