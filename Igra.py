@@ -83,6 +83,11 @@ class Game(pygame.sprite.Sprite):
                 self.coins += enemy.coins
         self.Enemies = new_enemies
 
+    def end(self):
+        bg = pygame.image.load('gameover(1).png')
+        bg = pygame.transform.scale(bg, (1200, 720))
+        self.screen.blit(bg, (0, 0))
+
     def obnovleniye_ecrana(self):
         """
         draws all existing objects
@@ -93,6 +98,7 @@ class Game(pygame.sprite.Sprite):
         self.Novaya_Karta.draw_road()
         self.Novaya_Karta.draw_buildings()
         self.check_dead_enemies()
+        endgame = False
 
         score = str(self.score)
         f1 = pygame.font.Font(None, 40)
@@ -113,4 +119,10 @@ class Game(pygame.sprite.Sprite):
             enemy.draw(self.screen)
             for tower in self.Towers:
                 tower.shoot(enemy)
+            if enemy.x >= self.Novaya_Karta.Road[len(self.Novaya_Karta.Road) - 1][0]:
+                endgame = True
+
+        if endgame:
+            self.end()
+
         pygame.display.update()
