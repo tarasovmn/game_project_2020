@@ -76,7 +76,6 @@ class Enemy(pygame.sprite.Sprite):
                     self.motion = [1, 0]
                     self.corners_passed += 1
 
-
     def check_if_alive(self):
         """
         checks if enemy is alive
@@ -94,6 +93,7 @@ class Enemy(pygame.sprite.Sprite):
         screen.blit(self.image, self.rect)
         pygame.draw.line(screen, (0, 0, 0), (self.x - 25, self.y + 30),
                          (self.x - 25 + self.hp / self.hp_per_pix, self.y + 30), 3)
+
 
 class StrongEnemy(Enemy):
     def __init__(self, startpoint):
@@ -120,11 +120,6 @@ class StrongEnemy(Enemy):
         self.coins = 2
 
     def sprite_update(self):
-        self.k = (self.time // 2) % 10 # every 2 frames sprite changes
+        self.k = (self.time // 2) % 10  # every 2 frames sprite changes
         self.image = self.strongenemy_sprites[self.k]
         self.rect = self.strongenemy_sprites_rect[self.k]
-
-
-
-
-

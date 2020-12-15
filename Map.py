@@ -28,7 +28,7 @@ class Karta:
         self.road = [[-1000, -100]]
         self.decor = [[-1000, -100]]
         self.tower_image = pygame.transform.scale(pygame.image.load('tower_image.png'), (6 * self.r, 6 * self.r))
-        self.decor_image = pygame.transform.scale(pygame.image.load('decor_image.png'), (4 * self.r, 4 * self.r))
+        self.decor_image = pygame.transform.scale(pygame.image.load('decor_image.png'), (3 * self.r, 6 * self.r))
 
     def generate_road(self):
         """
