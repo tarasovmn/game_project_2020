@@ -36,7 +36,6 @@ class Enemy(pygame.sprite.Sprite):
     def sprite_update(self):
         """
         makes enemies change their appearance
-        :return:
         """
         self.k = (self.time // 2) % 10  # every 2 frames sprite changes
         self.image = self.enemy_sprites[self.k]
@@ -45,8 +44,6 @@ class Enemy(pygame.sprite.Sprite):
     def move(self, massiv):
         """
         makes enemies go
-        :param massiv:
-        :return:
         """
         self.x += self.vel * self.motion[0]
         self.y += self.vel * self.motion[1]
@@ -55,8 +52,6 @@ class Enemy(pygame.sprite.Sprite):
     def check_angle(self, massiv):
         """
         makes enemies go on the road
-        :param massiv:
-        :return:
         """
         if self.corners_passed == len(massiv) - 1:
             pass
@@ -87,7 +82,6 @@ class Enemy(pygame.sprite.Sprite):
         """
         draws enemy in it's current coordinates
         :param screen: where to draw enemies
-        :return:
         """
         self.rect = self.image.get_rect(center=(self.x, self.y))
         screen.blit(self.image, self.rect)

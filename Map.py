@@ -14,8 +14,6 @@ class Karta:
     def __init__(self, screen, r):
         """
         initialisation
-        :param screen:
-        :param r:
         """
         self.r = r
         self.screen = screen
@@ -58,7 +56,7 @@ class Karta:
     def draw_road(self):
         """
         draws the road
-        :return: нан
+        :return: none
         """
         for pos in self.Road:
             pygame.draw.circle(screen, [255, 0, 191], pos, 12)
@@ -69,8 +67,7 @@ class Karta:
 
     def generate_frame(self):
         """
-        TODO
-        :return:
+        define area for drawing road
         """
         for pos in self.Road:
             self.min_x = min(self.min_x, pos[0])
@@ -87,7 +84,6 @@ class Karta:
     def generate_buildings(self):
         """
         generate places for defenders
-        :return:
         """
         buildings = [[-100, -100]]
         for deltay in range(0, 100, 10):
@@ -111,7 +107,6 @@ class Karta:
     def generate_environment(self):
         """
         creates decorations
-        :return:
         """
         mega_buildings = [[-100, -100]]
         for delay in range(0, 600, 10):
@@ -138,7 +133,6 @@ class Karta:
     def draw_buildings(self):
         """
         draws empty places for defenders and decorations
-        :return:
         """
         self.screen.blit(self.tower_image,
                          [self.Road[len(self.Road) - 1][0], self.Road[len(self.Road) - 1][1] - 3 * self.r])

@@ -79,7 +79,6 @@ class Game(pygame.sprite.Sprite):
     def check_dead_enemies(self):
         """
         adds points and coins
-        :return:
         """
         new_enemies = []
         for enemy in self.Enemies:
@@ -91,6 +90,9 @@ class Game(pygame.sprite.Sprite):
         self.Enemies = new_enemies
 
     def end(self):
+        """
+        game over
+        """
         pygame.mixer.music.load('mac.mp3')  # не баг, а фича
         pygame.mixer.music.play(0)
         bg = pygame.image.load('gameover(1).png')
@@ -100,7 +102,6 @@ class Game(pygame.sprite.Sprite):
     def obnovleniye_ecrana(self):
         """
         draws all existing objects
-        :return:
         """
         self.screen.fill((255, 255, 255))
         self.screen.blit(self.bg, (0, 0))
